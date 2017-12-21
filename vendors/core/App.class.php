@@ -6,7 +6,7 @@ class App {
 	static $action;
 
 	public static function start() {
-		echo "(start)";
+		//echo "(start)";
 		self::init();
 		self::autoload();
 		self::dispatch();
@@ -14,6 +14,7 @@ class App {
 
 	// init dirs, config
 	private static function init() {
+		define("APP_HOME", '/opusv-mvc'); // can be in config.php?
 		define("DS", DIRECTORY_SEPARATOR);
 		define("ROOT", getcwd() . DS);
 
@@ -28,6 +29,8 @@ class App {
 		define("PATH_MODEL", PATH_APP . 'models' . DS);
 		define("PATH_CONTROLLER", PATH_APP . 'controllers' . DS);
 		define("PATH_VIEW", PATH_APP . 'views' . DS);
+
+		define("PATH_TEMPLATE", PATH_VIEW . 'templates' . DS);
 
 		//require PATH_LIB . 'BaseModel.class.php'; // extending from both Person class and Base Model?
 		require PATH_LIB . 'BaseController.class.php';

@@ -44,8 +44,10 @@ abstract class Person{
 
 		// first name comes from subclass
 		// both first and last name get the first letter uppercased
-		$firstName = ucfirst(get_class($this));
-		$lastName = ucfirst($this->lastName);
+		//$firstName = ucfirst(get_class($this));
+		//$lastName = ucfirst($this->lastName);
+		$firstname = ucfirst(get_class($this));
+		$lastname = ucfirst($this->lastname);
 
 		// check for singulars
 		if(abs($this->weight) === 1){
@@ -56,7 +58,8 @@ abstract class Person{
 		}
 
 		// make the person string
-		$string = "My name is {$firstName} {$lastName}. I weigh {$this->weight}kg{$ws}, and am {$this->height}cm{$hs} tall.";
+		//$string = "My name is {$firstName} {$lastName}. I weigh {$this->weight}kg{$ws}, and am {$this->height}cm{$hs} tall.";
+		$string = "My name is {$firstname} {$lastname}. I weigh {$this->weight}kg{$ws}, and am {$this->height}cm{$hs} tall.";
 
 		if($return){
 			// return the string if asked to do so
