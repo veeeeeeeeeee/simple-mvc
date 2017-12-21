@@ -13,16 +13,17 @@ class Database {
 			'dbname' => $config['dbname']
 		];
 
-		$this->conn = mysql_connect($args['host'] . ':' . $args['port'], $args['dbuser'], $args['password']);
-		mysql_select_db($args['dbname']);
+		//$this->conn = mysql_connect($args['host'] . ':' . $args['port'], $args['dbuser'], $args['password']); // deprecated
+		//mysql_select_db($args['dbname']);
+		$this->conn = new mysqli($args['host'] . ':' . $args['port'], $args['dbuser'], $args['password'], $args['dbname']);
 	}
 
 	public function query($stmt) {
 		$this->stmt = $stmt;
 
 		// SQL injection alert
-		$res = mysql_query($this->stmt, $this->conn);
-		// DO NOT USE IN PROD
+		//$res = mysql_query($this->stmt, $this->conn); // deprecated function
+		$res = $this->conn->query($stmt);
 		return $res;
 	}
 }

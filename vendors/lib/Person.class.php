@@ -19,7 +19,10 @@ abstract class Person{
 	public function __construct($lastname, $weight, $height){
 
 		// last name of person
-		$this->lastName = $lastname;
+		//$this->lastName = $lastname;
+
+		// @NOTE since this is a typo, i'll go ahead and change the code
+		$this->lastname = $lastname;
 
 		// weight in kilograms
 		$this->weight = is_numeric($weight)?$weight:die("MUST BE A NUMBER! DENIED!");
