@@ -20,8 +20,9 @@ class App {
 		define("PATH_APP", ROOT . 'app' . DS);
 		define("PATH_PUBLIC", ROOT . 'public' . DS);
 		define("PATH_VENDOR", ROOT . 'vendors' . DS);
+		define("PATH_RESOURCE", ROOT . 'resources' . DS);
 
-		//define("PATH_CORE", PATH_VENDOR . 'core');
+		define("PATH_CORE", PATH_VENDOR . 'core');
 		define("PATH_DB", PATH_VENDOR . 'database' . DS);
 		define("PATH_LIB", PATH_VENDOR . 'lib' . DS);
 
@@ -30,6 +31,9 @@ class App {
 		define("PATH_VIEW", PATH_APP . 'views' . DS);
 
 		define("PATH_TEMPLATE", PATH_VIEW . 'templates' . DS);
+
+		define("PATH_IMG", PATH_RESOURCE . 'img' . DS);
+
 
 		//require PATH_LIB . 'BaseModel.class.php'; // extending from both Person class and Base Model?
 		require PATH_LIB . 'BaseController.class.php';

@@ -20,7 +20,9 @@ class BaseView {
 	}
 
 	public function render($template) {
+		include PATH_TEMPLATE . $this->templates . DS . 'header.php';
 		include PATH_TEMPLATE . $this->templates . DS . $template;
+		include PATH_TEMPLATE . $this->templates . DS . 'footer.php';
 	}
 }
 

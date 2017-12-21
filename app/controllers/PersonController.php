@@ -4,6 +4,10 @@ require_once PATH_MODEL . 'PersonEntity.php';
 require_once PATH_VIEW . 'PersonView.php';
 
 class PersonController extends BaseController {
+	protected $baseurl;
+	public function __construct() {
+		$this->baseurl = APP_HOME . '/index.php?controller=Person&action=';
+	}
 	/**
 	 * show all persons
 	 *
@@ -23,8 +27,40 @@ class PersonController extends BaseController {
 		$v = new PersonView();
 		$v->set('testkey', 'testval');
 		$v->set('persons', $persons);
+		$message = '';
+		if (!empty($_SESSION['message'])) {
+			$message = $_SESSION['message'];
+		}
+		$v->set('message', $message);
+		
+		$v->set('baseurl', $this->baseurl);
+		$_SESSION['message'] = '';
+
 		$v->render('index.php');
 		// render view displaying table (calling display() here?), include links to edit, view?, delete -- will be handled in template
+	}
+
+	/**
+	 * display a person
+	 *
+	 * @param
+	 * @return
+	 */
+	public function view() {
+		if (!isset($_GET['id'])) {
+			$this->redirect(APP_HOME . '/index.php?controller=Person&action=index');
+		}
+		else {
+			$row_id = $_GET['id'];
+			$p = new PersonEntity("", 0, 0);
+			$p->load_by_id($row_id);
+
+			$content = $p->display(true);
+			$v = new PersonView();
+			$v->set('content', $content);
+			$v->set('baseurl', $this->baseurl);
+			$v->render('view.php');
+		}
 	}
 
 	/**
@@ -34,12 +70,14 @@ class PersonController extends BaseController {
 	 * @return render the template
 	 */
 	public function add() {
+		$_SESSION['message'] = '';
 		//echo "calling add";
 		// render view with bunch of input fields, calling add_save()
 		$dest = APP_HOME . '/index.php?controller=Person&action=add';
 
 		$v = new PersonView();
 		$v->set('posturl', $dest);
+		$v->set('baseurl', $this->baseurl);
 		$v->render('add.php');
 	}
 
@@ -62,6 +100,7 @@ class PersonController extends BaseController {
 		//echo $p->display(true);
 		// call save
 		$p->save();
+		$_SESSION['message'] = "Successfully added.";
 		// redirect to index
 		$this->redirect(APP_HOME . '/index.php?controller=Person&action=index');
 	}
@@ -73,6 +112,7 @@ class PersonController extends BaseController {
 	 * @return render the template
 	 */
 	public function edit() {
+		$_SESSION['message'] = '';
 		//echo "calling edit";
 		// get id
 		if (!isset($_GET['id'])) {
@@ -97,6 +137,7 @@ class PersonController extends BaseController {
 			$v = new PersonView();
 			$v->set('posturl', $dest);
 			$v->set('person', $person);
+			$v->set('baseurl', $this->baseurl);
 			$v->render('edit.php');
 		}
 	}
@@ -132,6 +173,7 @@ class PersonController extends BaseController {
 			// call save
 			//$this->pprint($p);
 			$p->save();
+			$_SESSION['message'] = 'Successfully edited.';
 
 			// redirect to index
 			$this->redirect(APP_HOME . '/index.php?controller=Person&action=index');
@@ -159,6 +201,7 @@ class PersonController extends BaseController {
 			//$this->pprint($p);
 			// call delete
 			$p->delete();
+			$_SESSION['message'] = 'Successfully deleted.';
 			// redirect to index
 			$this->redirect(APP_HOME . '/index.php?controller=Person&action=index');
 		}
