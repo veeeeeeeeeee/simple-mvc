@@ -14,7 +14,6 @@ class App {
 
 	// init dirs, config
 	private static function init() {
-		define("APP_HOME", '/opusv-mvc'); // can be in config.php?
 		define("DS", DIRECTORY_SEPARATOR);
 		define("ROOT", getcwd() . DS);
 
@@ -40,6 +39,7 @@ class App {
 		$GLOBALS['config'] = include PATH_APP . 'config.php';
 		// echo "init works ?!";
 		// echo PATH_DB;
+		define("APP_HOME", $GLOBALS['config']['app-home']); // can be in config.php?
 
 		session_start();
 	}
