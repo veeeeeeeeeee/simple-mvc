@@ -107,6 +107,7 @@ class PersonEntity extends Person {
 		$query = "SELECT * FROM " . self::TABLE . " WHERE id = " . $row_id;
 		//echo $query;
 
+		// TODO: need a fail check
 		// run query
 		$res = $this->db->query($query);
 

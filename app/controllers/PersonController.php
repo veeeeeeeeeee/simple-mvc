@@ -12,7 +12,6 @@ class PersonController extends BaseController {
 	 */
 	public function index() {
 		//echo "calling index";
-
 		// create PersonEntity
 		$p = new PersonEntity("", 0, 0);
 		// query all
@@ -37,7 +36,6 @@ class PersonController extends BaseController {
 	public function add() {
 		//echo "calling add";
 		// render view with bunch of input fields, calling add_save()
-
 		$dest = APP_HOME . '/index.php?controller=Person&action=add';
 
 		$v = new PersonView();
@@ -52,18 +50,16 @@ class PersonController extends BaseController {
 	 * @return reroute to index
 	 */
 	public function add_save() {
-		echo "calling add save";
+		//echo "calling add save";
 		// get data from post
 		$post = [
 			'lastname' => $_POST['lastname'],
 			'weight' => $_POST['weight'],
 			'height' => $_POST['height']
 		];
-
 		// create PersonEntity, use sets
 		$p = new PersonEntity($post['lastname'], $post['weight'], $post['height']);
 		//echo $p->display(true);
-
 		// call save
 		$p->save();
 		// redirect to index
@@ -79,8 +75,30 @@ class PersonController extends BaseController {
 	public function edit() {
 		//echo "calling edit";
 		// get id
-		// create PersonEntity, load_by_id
-		// render view with bunch of input fields, populate with PersonEntity data
+		if (!isset($_GET['id'])) {
+			$this->redirect(APP_HOME . '/index.php?controller=Person&action=index');
+		}
+		else {
+			$row_id = $_GET['id'];
+			// create PersonEntity, load_by_id
+			$p = new PersonEntity("", 0, 0);
+			$p->load_by_id($row_id);
+
+			$person = [
+				'lastname' => $p->get_lastname(),
+				'weight' => $p->get_weight(),
+				'height' => $p->get_height()
+			];
+			//$this->pprint($p);
+			//$this->pprint($person);
+			// render view with bunch of input fields, populate with PersonEntity data
+			$dest = APP_HOME . '/index.php?controller=Person&action=edit&id=' . $row_id;
+
+			$v = new PersonView();
+			$v->set('posturl', $dest);
+			$v->set('person', $person);
+			$v->render('edit.php');
+		}
 	}
 
 	/**
@@ -92,9 +110,33 @@ class PersonController extends BaseController {
 	public function edit_save() {
 		//echo "calling edit save";
 		// get id, get post data
-		// create PersonEntity, load_by_id
-		// call save
-		// redirect to index
+		//echo $_GET['id'];
+		if (!isset($_GET['id'])) {
+			$this->redirect(APP_HOME . '/index.php?controller=Person&action=index');
+		}
+		else {
+			$row_id = $_GET['id'];
+			$post = [
+				'lastname' => $_POST['lastname'],
+				'weight' => $_POST['weight'],
+				'height' => $_POST['height']
+			];
+			// create PersonEntity, load_by_id
+			$p = new PersonEntity("", 0, 0);
+			$p->load_by_id($row_id);
+			// update the posted values into the entity
+			// TODO: fail check
+			$p->set_lastname($post['lastname']);
+			$p->set_weight($post['weight']);
+			$p->set_height($post['height']);
+			// call save
+			//$this->pprint($p);
+			$p->save();
+
+			// redirect to index
+			$this->redirect(APP_HOME . '/index.php?controller=Person&action=index');
+		}
+
 	}
 
 	/**
@@ -105,9 +147,27 @@ class PersonController extends BaseController {
 	 */
 	public function delete() {
 		//echo "calling delete";
-		// get id, create PersonEntity, load_by_id
-		// call delete
-		// redirect to index
+		if (!isset($_GET['id'])) {
+			$this->redirect(APP_HOME . '/index.php?controller=Person&action=index');
+		}
+		else {
+			// get id, create PersonEntity, load_by_id
+			$row_id = $_GET['id'];
+			// create PersonEntity, load_by_id
+			$p = new PersonEntity("", 0, 0);
+			$p->load_by_id($row_id);
+			//$this->pprint($p);
+			// call delete
+			$p->delete();
+			// redirect to index
+			$this->redirect(APP_HOME . '/index.php?controller=Person&action=index');
+		}
+	}
+
+	function pprint($a) {
+		echo "<pre>";
+		print_r($a);
+		echo "</pre>";
 	}
 }
 
