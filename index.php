@@ -1,10 +1,9 @@
 <?php
 
-require_once('init.php');
+//require_once('init.php');
 
-__init__();
-
-$config = $GLOBALS['config'];
+//__init__();
+//$config = $GLOBALS['config'];
 
 //$db = new Database($config);
 //$r = $db->query('SELECT * FROM test;');
@@ -12,11 +11,10 @@ $config = $GLOBALS['config'];
 //	print_r($a);
 //}
 
-
 //require PATH_MODEL . 'Engineer.php';
-require PATH_MODEL . 'PersonEntity.php';
+//require PATH_MODEL . 'PersonEntity.php';
 
-$p = new PersonEntity("Tester", 55.00, 177.02);
+//$p = new PersonEntity("Tester", 55.00, 177.02);
 
 //$p->load_by_id(9);
 //echo $p->get_lastname();
@@ -33,6 +31,9 @@ $p = new PersonEntity("Tester", 55.00, 177.02);
 //print_r($p->all());
 //echo "</pre>";
 
+
+require_once('vendors/core/App.class.php');
+App::start();
 
 
 
