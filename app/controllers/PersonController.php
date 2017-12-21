@@ -178,7 +178,6 @@ class PersonController extends BaseController {
 			// redirect to index
 			$this->redirect(APP_HOME . '/index.php?controller=Person&action=index');
 		}
-
 	}
 
 	/**

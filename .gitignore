@@ -3,3 +3,5 @@
 *.swp
 /app/config.php
 /init.php
+/sql/testdata.sql
+README.txt

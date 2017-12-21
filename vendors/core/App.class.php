@@ -88,6 +88,10 @@ class App {
 				$c->index();
 			}
 		}
+		else {
+			$c = new PersonController();
+			$c->index();
+		}
 	}
 }
 
