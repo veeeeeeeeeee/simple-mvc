@@ -2,3 +2,4 @@
 *.swo
 *.swp
 /app/config.php
+/init.php
